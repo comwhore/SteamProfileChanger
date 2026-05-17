@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+venv/
+.venv/
+
+# Never commit — session cookies / Playwright storage
+state.json
+
+# Local runtime data
+pfps/
+logs/
+config.py
+
+# JSON: only themes.json and *.example.json are tracked
+*.json
+!themes.json
+!*.example.json
+
+# Local Pinterest scraper (not part of the app)
+pinterest_scraper.js

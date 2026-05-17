@@ -1,0 +1,9 @@
+{
+  "avatars": [
+    {
+      "id": "ID_HERE",
+      "protobuf": "PROTOBUF_HERE",
+      "weight": 100
+    }
+  ]
+}
