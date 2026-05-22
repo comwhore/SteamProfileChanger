@@ -8,11 +8,14 @@ venv/
 
 # Never commit — session cookies / Playwright storage
 state.json
+.token_cache.json
 
 # Local runtime data
 pfps/
 logs/
 config.py
+main.py.backup
+har.har
 
 # JSON: only themes.json and *.example.json are tracked
 *.json

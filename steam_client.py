@@ -1,23 +1,8 @@
 import requests
 
-from config import (
-    SESSION_ID,
-    STEAM_LOGIN_SECURE,
-)
+from session_loader import load_session_credentials
 
 session = requests.Session()
-
-session.cookies.set(
-    "sessionid",
-    SESSION_ID,
-    domain="steamcommunity.com"
-)
-
-session.cookies.set(
-    "steamLoginSecure",
-    STEAM_LOGIN_SECURE,
-    domain="steamcommunity.com"
-)
 
 HEADERS = {
     "User-Agent": (
@@ -26,5 +11,26 @@ HEADERS = {
         "Chrome/136.0.0.0 Safari/537.36"
     ),
     "Origin": "https://steamcommunity.com",
-    "Referer": "https://steamcommunity.com/"
+    "Referer": "https://steamcommunity.com/",
 }
+
+
+def apply_session_credentials(creds: dict[str, str] | None = None) -> dict[str, str]:
+    """Reload cookies from state.json into the shared requests session."""
+    if creds is None:
+        creds = load_session_credentials()
+
+    session.cookies.set(
+        "sessionid",
+        creds["sessionid"],
+        domain="steamcommunity.com",
+    )
+    session.cookies.set(
+        "steamLoginSecure",
+        creds["steamLoginSecure"],
+        domain="steamcommunity.com",
+    )
+    return creds
+
+
+apply_session_credentials()

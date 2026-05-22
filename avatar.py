@@ -2,7 +2,9 @@ import random
 from pathlib import Path
 
 from steam_client import session, HEADERS
-from config import SESSION_ID, STEAM_ID, ACCESS_TOKEN
+from config import STEAM_ID
+from session_loader import load_session_credentials
+from token_fetcher import get_access_token
 from utils import weighted_choice, load_json
 
 
@@ -49,7 +51,7 @@ def upload_local_avatar(path: Path):
         data = {
             "type": "player_avatar_image",
             "sId": STEAM_ID,
-            "sessionid": SESSION_ID,
+            "sessionid": load_session_credentials()["sessionid"],
             "doSub": "1",
             "json": "1"
         }
@@ -85,7 +87,7 @@ def set_steam_avatar():
     url = (
         "https://api.steampowered.com/"
         "IPlayerService/SetAnimatedAvatar/v1"
-        f"?access_token={ACCESS_TOKEN}"
+        f"?access_token={get_access_token(STEAM_ID)}"
     )
 
     response = session.post(

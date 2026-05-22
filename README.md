@@ -22,13 +22,15 @@ pip install -r requirements.txt
 playwright install chromium
 ```
 
-Copy the example config and fill in your credentials (never commit `config.py`):
+Copy the example config (never commit `config.py`):
 
 ```bash
 copy config.example.py config.py
 ```
 
 On Linux/macOS use `cp` instead of `copy`.
+
+Session cookies and SteamID64 are read automatically from `state.json` (see Playwright session below). You do not paste `sessionid` or `steamLoginSecure` into `config.py` by hand.
 
 ---
 
@@ -47,36 +49,19 @@ On Linux/macOS use `cp` instead of `copy`.
 
 ---
 
-## Getting cookies
-
-Open Steam in your browser.
-
-Press F12.
-
-Go to:
-
-**Application → Cookies → https://steamcommunity.com**
-
-Copy:
-
-- `sessionid`
-- `steamLoginSecure`
-
-Paste them into `config.py`.
-
-Also set your SteamID64 in `config.py` and in `token_fetcher.py` (replace `YOUR_STEAM_ID` in the profile edit URL).
-
----
-
 ## Playwright session (`state.json`)
 
-For access-token fetching, log in once and save browser state:
+Log in once and save browser state (this supplies `sessionid`, `steamLoginSecure`, SteamID64, and the access token):
 
 ```bash
 python setup_playwright.py
 ```
 
 Log in in the opened browser, press Enter, then `state.json` is written locally. Keep it private.
+
+Re-run this when you get signed out or when the script warns that login cookies are expiring.
+
+**Access tokens:** Cosmetics/avatar API tokens are cached in `.token_cache.json` (~50 minutes). Playwright only runs when the cache is missing or expired, and then refreshes `state.json` cookies. Profile edits use `requests` only (no Playwright per run).
 
 ---
 

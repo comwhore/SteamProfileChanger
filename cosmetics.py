@@ -1,16 +1,14 @@
 from steam_client import session, HEADERS
 from utils import weighted_choice, load_json, wait
-from config import ACCESS_TOKEN
+from config import STEAM_ID
+from token_fetcher import get_access_token
 
 
 API_BASE = "https://api.steampowered.com/IPlayerService"
 
 
-def post_protobuf(endpoint, protobuf):
-    url = (
-        f"{API_BASE}/{endpoint}"
-        f"?access_token={ACCESS_TOKEN}"
-    )
+def post_protobuf(endpoint, protobuf, access_token: str):
+    url = f"{API_BASE}/{endpoint}?access_token={access_token}"
 
     response = session.post(
         url,
@@ -62,6 +60,8 @@ def apply_all_cosmetics():
         )
     ]
 
+    access_token = get_access_token(STEAM_ID)
+
     for json_file, endpoint, label in cosmetics:
         items = load_json(json_file)
 
@@ -78,10 +78,7 @@ def apply_all_cosmetics():
 
         print(f"[*] Applying {label}")
 
-        post_protobuf(
-            endpoint,
-            protobuf
-        )
+        post_protobuf(endpoint, protobuf, access_token)
 
         wait()
 

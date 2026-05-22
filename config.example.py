@@ -1,8 +1,8 @@
-from token_fetcher import fetch_access_token
+from session_loader import load_session_credentials
 
-# Session ID and Steam Login Secure are found in the browser cookies
-SESSION_ID = "YOUR_SESSION_ID_HERE"
-STEAM_LOGIN_SECURE = "YOUR_STEAM_LOGIN_SECURE_HERE"
-STEAM_ID = "YOUR_STEAM_ID_HERE"
+_credentials = load_session_credentials()
+
+SESSION_ID = _credentials["sessionid"]
+STEAM_LOGIN_SECURE = _credentials["steamLoginSecure"]
+STEAM_ID = _credentials["steam_id"]
 TIMEOUT_SECONDS = 3
-ACCESS_TOKEN = fetch_access_token()

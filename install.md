@@ -7,7 +7,7 @@ There are two parts: the app itself, and the **run on login** task.
    ```bash
    pip install -r requirements.txt
    ```
-3. Put your Steam cookies and SteamID64 in `config.py` (see `README.md`).
+3. Run `python setup_playwright.py` and save `state.json` (see `README.md`), then `copy config.example.py config.py`.
 4. Test manually:
    ```bash
    python main.py
